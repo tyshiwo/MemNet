@@ -1,6 +1,6 @@
 # MemNet
 
-Code for our ICCV'17 paper "MemNet: A Persistent Memory Network for Image Restoration" (###SPOTLIGHT Presentation).
+Code for our ICCV'17 paper "MemNet: A Persistent Memory Network for Image Restoration" (** SPOTLIGHT Presentation).
 
 ### Citation
 If you find MemNet useful in your research, please consider citing:
