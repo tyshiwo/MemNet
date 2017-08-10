@@ -1,6 +1,7 @@
-# MemNet
 
+# MemNet
 Code for our ICCV'17 paper "MemNet: A Persistent Memory Network for Image Restoration" (**SPOTLIGHT Presentation**)
+### [[Paper]](http://cvlab.cse.msu.edu/pdfs/Image_Restoration%20using_Persistent_Memory_Network.pdf)[[Project]]
 
 ### Citation
 If you find MemNet useful in your research, please consider citing:
