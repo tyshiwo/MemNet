@@ -30,9 +30,9 @@ const Dtype clip_gradients = this->param_.clip_gradients()/rate;
 1. Remember to compile the matlab wrapper: make matcaffe, since we use matlab to do testing.
 2. We release two pretrained models: MemNet_M6R6_80C64 and MemNet_M10R10_212C64 in "model" folder. Choose either one to do testing on benchmark Set5. 
 
-    	$ cd ./results/MemNet_M6R6_80C64
+		$ cd ./results/MemNet_M6R6_80C64
     	$ matlab
-    	>> test_MemNet_M6R6_SR
+    	>> test_MemNet_M6R6_SR
 	The results are stored in "results" folder, with both reconstructed images and PSNR/SSIMs.
 
 ## More Qualitative results
