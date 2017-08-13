@@ -12,26 +12,26 @@ If you find MemNet useful in your research, please consider citing:
 	  year={2017}
 	}
 	
-# Implement adjustable gradient clipping 
+## Implement adjustable gradient clipping 
 modify sgd_solver.cpp in your_caffe_root/src/caffe/solvers/, where we add the following codes in funciton ClipGradients():
 
 Dtype rate = GetLearningRate();
 
 const Dtype clip_gradients = this->param_.clip_gradients()/rate;
 
-# Training (Taking Super-resolution task as the example)
+## Training (Taking Super-resolution task as the example)
 1. Preparing training/validation data using the files: generate_trainingset_x234/generate_testingset_x234 in "data/SuperResolution" folder. "Train_291" folder contains 291 training images and "Set5" folder is a popular benchmark dataset.
 2. We release two MemNet architectures: MemNet_M6R6_80C64 and MemNet_M10R10_212C64 in "caffe_files" folder. Choose either one to do training. 
 
     	$ cd ./caffe_files/MemNet_M6R6_80C64
     	$ ./train_MemNet_M6R6_80C64.sh
 
-# Test (Taking Super-resolution task as the example)
+## Test (Taking Super-resolution task as the example)
 1. Remember to compile the matlab wrapper: make matcaffe, since we use matlab to do testing.
 2. We release two pretrained models: MemNet_M6R6_80C64 and MemNet_M10R10_212C64 in "model" folder. Choose either one to do testing on benchmark Set5. 
 
-    	$ cd ./caffe_files/MemNet_M6R6_80C64
-    	$ ./train_MemNet_M6R6_80C64.sh
+    	$ cd ./results/MemNet_M6R6_80C64
+    	$ matlab
     	>> test_MemNet_M6R6
 	
 The results are stored in "results" folder, with both reconstructed images and PSNR/SSIMs.
