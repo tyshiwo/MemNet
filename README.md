@@ -32,7 +32,7 @@ const Dtype clip_gradients = this->param_.clip_gradients()/rate;
 
     	$ cd ./results/MemNet_M6R6_80C64
     	$ matlab
-    	>> test_MemNet_M6R6
+    	>> test_MemNet_M6R6_SR
 	The results are stored in "results" folder, with both reconstructed images and PSNR/SSIMs.
 
 ## More Qualitative results
