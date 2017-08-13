@@ -21,15 +21,20 @@ const Dtype clip_gradients = this->param_.clip_gradients()/rate;
 
 # Training (Taking Super-resolution task as the example)
 1. Preparing training/validation data using the files: generate_trainingset_x234/generate_testingset_x234 in "data/SuperResolution" folder. "Train_291" folder contains 291 training images and "Set5" folder is a popular benchmark dataset.
-2. We release two MemNet architectures: MemNet_M6R6_80C64 and MemNet_M10R10_212C64 in "caffe_files" folder. Choose either one to do training.
-E.g., 
+2. We release two MemNet architectures: MemNet_M6R6_80C64 and MemNet_M10R10_212C64 in "caffe_files" folder. Choose either one to do training. 
 
-    $ cd ./caffe_files/MemNet_M6R6_80C64
-    $ ./train_MemNet_M6R6_80C64.sh
+    	$ cd ./caffe_files/MemNet_M6R6_80C64
+    	$ ./train_MemNet_M6R6_80C64.sh
 
 # Test (Taking Super-resolution task as the example)
 1. Remember to compile the matlab wrapper: make matcaffe, since we use matlab to do testing.
-2. We release two pretrained models: MemNet_M6R6_80C64 and MemNet_M10R10_212C64 in "model" folder. Choose either one to do testing on benchmark Set5. E.g., run file ./test/MemNet_M6R6_80C64/test_MemNet_M6R6, the results are stored in "results" folder, with both reconstructed images and PSNR/SSIMs.
+2. We release two pretrained models: MemNet_M6R6_80C64 and MemNet_M10R10_212C64 in "model" folder. Choose either one to do testing on benchmark Set5. 
+
+    	$ cd ./test/MemNet_M6R6_80C64
+    	$ matlab
+	>>test_MemNet_M6R6
+	
+The results are stored in "results" folder, with both reconstructed images and PSNR/SSIMs.
 
 ## More Qualitative results
 ### Image denoising
