@@ -1,0 +1,5493 @@
+name: "MemNet_M6R6_80C64"
+layer {
+    name: "data"
+    type: "HDF5Data"
+    top: "data"
+    top: "label"
+    hdf5_data_param {
+        source: "../../data/SuperResolution/train_31_x234.txt" # change this to your txt path which contains your data path
+        batch_size: 32
+        shuffle: true
+    }
+    include: { phase: TRAIN }
+}
+layer {
+    name: "bn_conv1"
+    type: "BatchNorm"
+    bottom: "data"
+    top: "bn_conv1"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv1"
+    type: "Scale"
+    bottom: "bn_conv1"
+    top: "bn_conv1"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu1"
+    type: "ReLU"
+    bottom: "bn_conv1"
+    top: "bn_conv1"
+}
+layer {
+    name: "conv1"
+    type: "Convolution"
+    bottom: "bn_conv1"
+    top: "conv1"
+    param {
+        lr_mult: 1.000000
+    }
+    param {
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "bn_conv01_01_a"
+    type: "BatchNorm"
+    bottom: "conv1"
+    top: "bn_conv01_01_a"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv01_01_a"
+    type: "Scale"
+    bottom: "bn_conv01_01_a"
+    top: "bn_conv01_01_a"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu01_01_a"
+    type: "ReLU"
+    bottom: "bn_conv01_01_a"
+    top: "bn_conv01_01_a"
+}
+layer {
+    name: "conv01_01_a"
+    type: "Convolution"
+    bottom: "bn_conv01_01_a"
+    top: "conv01_01_a"
+    param {
+        name: "conv01_wa"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv01_ba"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "bn_conv01_01_b"
+    type: "BatchNorm"
+    bottom: "conv01_01_a"
+    top: "bn_conv01_01_b"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv01_01_b"
+    type: "Scale"
+    bottom: "bn_conv01_01_b"
+    top: "bn_conv01_01_b"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu01_01_b"
+    type: "ReLU"
+    bottom: "bn_conv01_01_b"
+    top: "bn_conv01_01_b"
+}
+layer {
+    name: "conv01_01_b"
+    type: "Convolution"
+    bottom: "bn_conv01_01_b"
+    top: "conv01_01_b"
+    param {
+        name: "conv01_wb"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv01_bb"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "eltwise01_01"
+    type: "Eltwise"
+    bottom: "conv1"
+    bottom: "conv01_01_b"
+    top: "eltwise01_01"
+    eltwise_param {
+        operation: SUM
+    }
+}
+layer {
+    name: "bn_conv01_02_a"
+    type: "BatchNorm"
+    bottom: "eltwise01_01"
+    top: "bn_conv01_02_a"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv01_02_a"
+    type: "Scale"
+    bottom: "bn_conv01_02_a"
+    top: "bn_conv01_02_a"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu01_02_a"
+    type: "ReLU"
+    bottom: "bn_conv01_02_a"
+    top: "bn_conv01_02_a"
+}
+layer {
+    name: "conv01_02_a"
+    type: "Convolution"
+    bottom: "bn_conv01_02_a"
+    top: "conv01_02_a"
+    param {
+        name: "conv01_wa"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv01_ba"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "bn_conv01_02_b"
+    type: "BatchNorm"
+    bottom: "conv01_02_a"
+    top: "bn_conv01_02_b"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv01_02_b"
+    type: "Scale"
+    bottom: "bn_conv01_02_b"
+    top: "bn_conv01_02_b"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu01_02_b"
+    type: "ReLU"
+    bottom: "bn_conv01_02_b"
+    top: "bn_conv01_02_b"
+}
+layer {
+    name: "conv01_02_b"
+    type: "Convolution"
+    bottom: "bn_conv01_02_b"
+    top: "conv01_02_b"
+    param {
+        name: "conv01_wb"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv01_bb"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "eltwise01_02"
+    type: "Eltwise"
+    bottom: "eltwise01_01"
+    bottom: "conv01_02_b"
+    top: "eltwise01_02"
+    eltwise_param {
+        operation: SUM
+    }
+}
+layer {
+    name: "bn_conv01_03_a"
+    type: "BatchNorm"
+    bottom: "eltwise01_02"
+    top: "bn_conv01_03_a"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv01_03_a"
+    type: "Scale"
+    bottom: "bn_conv01_03_a"
+    top: "bn_conv01_03_a"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu01_03_a"
+    type: "ReLU"
+    bottom: "bn_conv01_03_a"
+    top: "bn_conv01_03_a"
+}
+layer {
+    name: "conv01_03_a"
+    type: "Convolution"
+    bottom: "bn_conv01_03_a"
+    top: "conv01_03_a"
+    param {
+        name: "conv01_wa"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv01_ba"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "bn_conv01_03_b"
+    type: "BatchNorm"
+    bottom: "conv01_03_a"
+    top: "bn_conv01_03_b"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv01_03_b"
+    type: "Scale"
+    bottom: "bn_conv01_03_b"
+    top: "bn_conv01_03_b"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu01_03_b"
+    type: "ReLU"
+    bottom: "bn_conv01_03_b"
+    top: "bn_conv01_03_b"
+}
+layer {
+    name: "conv01_03_b"
+    type: "Convolution"
+    bottom: "bn_conv01_03_b"
+    top: "conv01_03_b"
+    param {
+        name: "conv01_wb"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv01_bb"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "eltwise01_03"
+    type: "Eltwise"
+    bottom: "eltwise01_02"
+    bottom: "conv01_03_b"
+    top: "eltwise01_03"
+    eltwise_param {
+        operation: SUM
+    }
+}
+layer {
+    name: "bn_conv01_04_a"
+    type: "BatchNorm"
+    bottom: "eltwise01_03"
+    top: "bn_conv01_04_a"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv01_04_a"
+    type: "Scale"
+    bottom: "bn_conv01_04_a"
+    top: "bn_conv01_04_a"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu01_04_a"
+    type: "ReLU"
+    bottom: "bn_conv01_04_a"
+    top: "bn_conv01_04_a"
+}
+layer {
+    name: "conv01_04_a"
+    type: "Convolution"
+    bottom: "bn_conv01_04_a"
+    top: "conv01_04_a"
+    param {
+        name: "conv01_wa"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv01_ba"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "bn_conv01_04_b"
+    type: "BatchNorm"
+    bottom: "conv01_04_a"
+    top: "bn_conv01_04_b"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv01_04_b"
+    type: "Scale"
+    bottom: "bn_conv01_04_b"
+    top: "bn_conv01_04_b"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu01_04_b"
+    type: "ReLU"
+    bottom: "bn_conv01_04_b"
+    top: "bn_conv01_04_b"
+}
+layer {
+    name: "conv01_04_b"
+    type: "Convolution"
+    bottom: "bn_conv01_04_b"
+    top: "conv01_04_b"
+    param {
+        name: "conv01_wb"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv01_bb"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "eltwise01_04"
+    type: "Eltwise"
+    bottom: "eltwise01_03"
+    bottom: "conv01_04_b"
+    top: "eltwise01_04"
+    eltwise_param {
+        operation: SUM
+    }
+}
+layer {
+    name: "bn_conv01_05_a"
+    type: "BatchNorm"
+    bottom: "eltwise01_04"
+    top: "bn_conv01_05_a"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv01_05_a"
+    type: "Scale"
+    bottom: "bn_conv01_05_a"
+    top: "bn_conv01_05_a"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu01_05_a"
+    type: "ReLU"
+    bottom: "bn_conv01_05_a"
+    top: "bn_conv01_05_a"
+}
+layer {
+    name: "conv01_05_a"
+    type: "Convolution"
+    bottom: "bn_conv01_05_a"
+    top: "conv01_05_a"
+    param {
+        name: "conv01_wa"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv01_ba"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "bn_conv01_05_b"
+    type: "BatchNorm"
+    bottom: "conv01_05_a"
+    top: "bn_conv01_05_b"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv01_05_b"
+    type: "Scale"
+    bottom: "bn_conv01_05_b"
+    top: "bn_conv01_05_b"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu01_05_b"
+    type: "ReLU"
+    bottom: "bn_conv01_05_b"
+    top: "bn_conv01_05_b"
+}
+layer {
+    name: "conv01_05_b"
+    type: "Convolution"
+    bottom: "bn_conv01_05_b"
+    top: "conv01_05_b"
+    param {
+        name: "conv01_wb"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv01_bb"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "eltwise01_05"
+    type: "Eltwise"
+    bottom: "eltwise01_04"
+    bottom: "conv01_05_b"
+    top: "eltwise01_05"
+    eltwise_param {
+        operation: SUM
+    }
+}
+layer {
+    name: "bn_conv01_06_a"
+    type: "BatchNorm"
+    bottom: "eltwise01_05"
+    top: "bn_conv01_06_a"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv01_06_a"
+    type: "Scale"
+    bottom: "bn_conv01_06_a"
+    top: "bn_conv01_06_a"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu01_06_a"
+    type: "ReLU"
+    bottom: "bn_conv01_06_a"
+    top: "bn_conv01_06_a"
+}
+layer {
+    name: "conv01_06_a"
+    type: "Convolution"
+    bottom: "bn_conv01_06_a"
+    top: "conv01_06_a"
+    param {
+        name: "conv01_wa"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv01_ba"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "bn_conv01_06_b"
+    type: "BatchNorm"
+    bottom: "conv01_06_a"
+    top: "bn_conv01_06_b"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv01_06_b"
+    type: "Scale"
+    bottom: "bn_conv01_06_b"
+    top: "bn_conv01_06_b"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu01_06_b"
+    type: "ReLU"
+    bottom: "bn_conv01_06_b"
+    top: "bn_conv01_06_b"
+}
+layer {
+    name: "conv01_06_b"
+    type: "Convolution"
+    bottom: "bn_conv01_06_b"
+    top: "conv01_06_b"
+    param {
+        name: "conv01_wb"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv01_bb"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "eltwise01_06"
+    type: "Eltwise"
+    bottom: "eltwise01_05"
+    bottom: "conv01_06_b"
+    top: "eltwise01_06"
+    eltwise_param {
+        operation: SUM
+    }
+}
+layer {
+    name: "concat01"
+    type: "Concat"
+    bottom: "conv1"
+    bottom: "eltwise01_01"
+    bottom: "eltwise01_02"
+    bottom: "eltwise01_03"
+    bottom: "eltwise01_04"
+    bottom: "eltwise01_05"
+    bottom: "eltwise01_06"
+    top: "concat01"
+    concat_param {
+        axis: 1
+    }
+}
+layer {
+    name: "bn_conv_transition_01"
+    type: "BatchNorm"
+    bottom: "concat01"
+    top: "bn_conv_transition_01"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv_transition_01"
+    type: "Scale"
+    bottom: "bn_conv_transition_01"
+    top: "bn_conv_transition_01"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu_transition_01"
+    type: "ReLU"
+    bottom: "bn_conv_transition_01"
+    top: "bn_conv_transition_01"
+}
+layer {
+    name: "conv_transition_01"
+    type: "Convolution"
+    bottom: "bn_conv_transition_01"
+    top: "conv_transition_01"
+    param {
+        lr_mult: 1.000000
+    }
+    param {
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 1
+        stride: 1
+        pad: 0
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "bn_conv02_01_a"
+    type: "BatchNorm"
+    bottom: "conv_transition_01"
+    top: "bn_conv02_01_a"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv02_01_a"
+    type: "Scale"
+    bottom: "bn_conv02_01_a"
+    top: "bn_conv02_01_a"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu02_01_a"
+    type: "ReLU"
+    bottom: "bn_conv02_01_a"
+    top: "bn_conv02_01_a"
+}
+layer {
+    name: "conv02_01_a"
+    type: "Convolution"
+    bottom: "bn_conv02_01_a"
+    top: "conv02_01_a"
+    param {
+        name: "conv02_wa"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv02_ba"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "bn_conv02_01_b"
+    type: "BatchNorm"
+    bottom: "conv02_01_a"
+    top: "bn_conv02_01_b"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv02_01_b"
+    type: "Scale"
+    bottom: "bn_conv02_01_b"
+    top: "bn_conv02_01_b"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu02_01_b"
+    type: "ReLU"
+    bottom: "bn_conv02_01_b"
+    top: "bn_conv02_01_b"
+}
+layer {
+    name: "conv02_01_b"
+    type: "Convolution"
+    bottom: "bn_conv02_01_b"
+    top: "conv02_01_b"
+    param {
+        name: "conv02_wb"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv02_bb"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "eltwise02_01"
+    type: "Eltwise"
+    bottom: "conv_transition_01"
+    bottom: "conv02_01_b"
+    top: "eltwise02_01"
+    eltwise_param {
+        operation: SUM
+    }
+}
+layer {
+    name: "bn_conv02_02_a"
+    type: "BatchNorm"
+    bottom: "eltwise02_01"
+    top: "bn_conv02_02_a"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv02_02_a"
+    type: "Scale"
+    bottom: "bn_conv02_02_a"
+    top: "bn_conv02_02_a"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu02_02_a"
+    type: "ReLU"
+    bottom: "bn_conv02_02_a"
+    top: "bn_conv02_02_a"
+}
+layer {
+    name: "conv02_02_a"
+    type: "Convolution"
+    bottom: "bn_conv02_02_a"
+    top: "conv02_02_a"
+    param {
+        name: "conv02_wa"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv02_ba"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "bn_conv02_02_b"
+    type: "BatchNorm"
+    bottom: "conv02_02_a"
+    top: "bn_conv02_02_b"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv02_02_b"
+    type: "Scale"
+    bottom: "bn_conv02_02_b"
+    top: "bn_conv02_02_b"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu02_02_b"
+    type: "ReLU"
+    bottom: "bn_conv02_02_b"
+    top: "bn_conv02_02_b"
+}
+layer {
+    name: "conv02_02_b"
+    type: "Convolution"
+    bottom: "bn_conv02_02_b"
+    top: "conv02_02_b"
+    param {
+        name: "conv02_wb"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv02_bb"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "eltwise02_02"
+    type: "Eltwise"
+    bottom: "eltwise02_01"
+    bottom: "conv02_02_b"
+    top: "eltwise02_02"
+    eltwise_param {
+        operation: SUM
+    }
+}
+layer {
+    name: "bn_conv02_03_a"
+    type: "BatchNorm"
+    bottom: "eltwise02_02"
+    top: "bn_conv02_03_a"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv02_03_a"
+    type: "Scale"
+    bottom: "bn_conv02_03_a"
+    top: "bn_conv02_03_a"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu02_03_a"
+    type: "ReLU"
+    bottom: "bn_conv02_03_a"
+    top: "bn_conv02_03_a"
+}
+layer {
+    name: "conv02_03_a"
+    type: "Convolution"
+    bottom: "bn_conv02_03_a"
+    top: "conv02_03_a"
+    param {
+        name: "conv02_wa"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv02_ba"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "bn_conv02_03_b"
+    type: "BatchNorm"
+    bottom: "conv02_03_a"
+    top: "bn_conv02_03_b"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv02_03_b"
+    type: "Scale"
+    bottom: "bn_conv02_03_b"
+    top: "bn_conv02_03_b"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu02_03_b"
+    type: "ReLU"
+    bottom: "bn_conv02_03_b"
+    top: "bn_conv02_03_b"
+}
+layer {
+    name: "conv02_03_b"
+    type: "Convolution"
+    bottom: "bn_conv02_03_b"
+    top: "conv02_03_b"
+    param {
+        name: "conv02_wb"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv02_bb"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "eltwise02_03"
+    type: "Eltwise"
+    bottom: "eltwise02_02"
+    bottom: "conv02_03_b"
+    top: "eltwise02_03"
+    eltwise_param {
+        operation: SUM
+    }
+}
+layer {
+    name: "bn_conv02_04_a"
+    type: "BatchNorm"
+    bottom: "eltwise02_03"
+    top: "bn_conv02_04_a"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv02_04_a"
+    type: "Scale"
+    bottom: "bn_conv02_04_a"
+    top: "bn_conv02_04_a"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu02_04_a"
+    type: "ReLU"
+    bottom: "bn_conv02_04_a"
+    top: "bn_conv02_04_a"
+}
+layer {
+    name: "conv02_04_a"
+    type: "Convolution"
+    bottom: "bn_conv02_04_a"
+    top: "conv02_04_a"
+    param {
+        name: "conv02_wa"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv02_ba"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "bn_conv02_04_b"
+    type: "BatchNorm"
+    bottom: "conv02_04_a"
+    top: "bn_conv02_04_b"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv02_04_b"
+    type: "Scale"
+    bottom: "bn_conv02_04_b"
+    top: "bn_conv02_04_b"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu02_04_b"
+    type: "ReLU"
+    bottom: "bn_conv02_04_b"
+    top: "bn_conv02_04_b"
+}
+layer {
+    name: "conv02_04_b"
+    type: "Convolution"
+    bottom: "bn_conv02_04_b"
+    top: "conv02_04_b"
+    param {
+        name: "conv02_wb"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv02_bb"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "eltwise02_04"
+    type: "Eltwise"
+    bottom: "eltwise02_03"
+    bottom: "conv02_04_b"
+    top: "eltwise02_04"
+    eltwise_param {
+        operation: SUM
+    }
+}
+layer {
+    name: "bn_conv02_05_a"
+    type: "BatchNorm"
+    bottom: "eltwise02_04"
+    top: "bn_conv02_05_a"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv02_05_a"
+    type: "Scale"
+    bottom: "bn_conv02_05_a"
+    top: "bn_conv02_05_a"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu02_05_a"
+    type: "ReLU"
+    bottom: "bn_conv02_05_a"
+    top: "bn_conv02_05_a"
+}
+layer {
+    name: "conv02_05_a"
+    type: "Convolution"
+    bottom: "bn_conv02_05_a"
+    top: "conv02_05_a"
+    param {
+        name: "conv02_wa"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv02_ba"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "bn_conv02_05_b"
+    type: "BatchNorm"
+    bottom: "conv02_05_a"
+    top: "bn_conv02_05_b"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv02_05_b"
+    type: "Scale"
+    bottom: "bn_conv02_05_b"
+    top: "bn_conv02_05_b"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu02_05_b"
+    type: "ReLU"
+    bottom: "bn_conv02_05_b"
+    top: "bn_conv02_05_b"
+}
+layer {
+    name: "conv02_05_b"
+    type: "Convolution"
+    bottom: "bn_conv02_05_b"
+    top: "conv02_05_b"
+    param {
+        name: "conv02_wb"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv02_bb"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "eltwise02_05"
+    type: "Eltwise"
+    bottom: "eltwise02_04"
+    bottom: "conv02_05_b"
+    top: "eltwise02_05"
+    eltwise_param {
+        operation: SUM
+    }
+}
+layer {
+    name: "bn_conv02_06_a"
+    type: "BatchNorm"
+    bottom: "eltwise02_05"
+    top: "bn_conv02_06_a"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv02_06_a"
+    type: "Scale"
+    bottom: "bn_conv02_06_a"
+    top: "bn_conv02_06_a"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu02_06_a"
+    type: "ReLU"
+    bottom: "bn_conv02_06_a"
+    top: "bn_conv02_06_a"
+}
+layer {
+    name: "conv02_06_a"
+    type: "Convolution"
+    bottom: "bn_conv02_06_a"
+    top: "conv02_06_a"
+    param {
+        name: "conv02_wa"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv02_ba"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "bn_conv02_06_b"
+    type: "BatchNorm"
+    bottom: "conv02_06_a"
+    top: "bn_conv02_06_b"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv02_06_b"
+    type: "Scale"
+    bottom: "bn_conv02_06_b"
+    top: "bn_conv02_06_b"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu02_06_b"
+    type: "ReLU"
+    bottom: "bn_conv02_06_b"
+    top: "bn_conv02_06_b"
+}
+layer {
+    name: "conv02_06_b"
+    type: "Convolution"
+    bottom: "bn_conv02_06_b"
+    top: "conv02_06_b"
+    param {
+        name: "conv02_wb"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv02_bb"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "eltwise02_06"
+    type: "Eltwise"
+    bottom: "eltwise02_05"
+    bottom: "conv02_06_b"
+    top: "eltwise02_06"
+    eltwise_param {
+        operation: SUM
+    }
+}
+layer {
+    name: "concat02"
+    type: "Concat"
+    bottom: "conv1"
+    bottom: "conv_transition_01"
+    bottom: "eltwise02_01"
+    bottom: "eltwise02_02"
+    bottom: "eltwise02_03"
+    bottom: "eltwise02_04"
+    bottom: "eltwise02_05"
+    bottom: "eltwise02_06"
+    top: "concat02"
+    concat_param {
+        axis: 1
+    }
+}
+layer {
+    name: "bn_conv_transition_02"
+    type: "BatchNorm"
+    bottom: "concat02"
+    top: "bn_conv_transition_02"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv_transition_02"
+    type: "Scale"
+    bottom: "bn_conv_transition_02"
+    top: "bn_conv_transition_02"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu_transition_02"
+    type: "ReLU"
+    bottom: "bn_conv_transition_02"
+    top: "bn_conv_transition_02"
+}
+layer {
+    name: "conv_transition_02"
+    type: "Convolution"
+    bottom: "bn_conv_transition_02"
+    top: "conv_transition_02"
+    param {
+        lr_mult: 1.000000
+    }
+    param {
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 1
+        stride: 1
+        pad: 0
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "bn_conv03_01_a"
+    type: "BatchNorm"
+    bottom: "conv_transition_02"
+    top: "bn_conv03_01_a"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv03_01_a"
+    type: "Scale"
+    bottom: "bn_conv03_01_a"
+    top: "bn_conv03_01_a"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu03_01_a"
+    type: "ReLU"
+    bottom: "bn_conv03_01_a"
+    top: "bn_conv03_01_a"
+}
+layer {
+    name: "conv03_01_a"
+    type: "Convolution"
+    bottom: "bn_conv03_01_a"
+    top: "conv03_01_a"
+    param {
+        name: "conv03_wa"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv03_ba"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "bn_conv03_01_b"
+    type: "BatchNorm"
+    bottom: "conv03_01_a"
+    top: "bn_conv03_01_b"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv03_01_b"
+    type: "Scale"
+    bottom: "bn_conv03_01_b"
+    top: "bn_conv03_01_b"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu03_01_b"
+    type: "ReLU"
+    bottom: "bn_conv03_01_b"
+    top: "bn_conv03_01_b"
+}
+layer {
+    name: "conv03_01_b"
+    type: "Convolution"
+    bottom: "bn_conv03_01_b"
+    top: "conv03_01_b"
+    param {
+        name: "conv03_wb"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv03_bb"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "eltwise03_01"
+    type: "Eltwise"
+    bottom: "conv_transition_02"
+    bottom: "conv03_01_b"
+    top: "eltwise03_01"
+    eltwise_param {
+        operation: SUM
+    }
+}
+layer {
+    name: "bn_conv03_02_a"
+    type: "BatchNorm"
+    bottom: "eltwise03_01"
+    top: "bn_conv03_02_a"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv03_02_a"
+    type: "Scale"
+    bottom: "bn_conv03_02_a"
+    top: "bn_conv03_02_a"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu03_02_a"
+    type: "ReLU"
+    bottom: "bn_conv03_02_a"
+    top: "bn_conv03_02_a"
+}
+layer {
+    name: "conv03_02_a"
+    type: "Convolution"
+    bottom: "bn_conv03_02_a"
+    top: "conv03_02_a"
+    param {
+        name: "conv03_wa"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv03_ba"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "bn_conv03_02_b"
+    type: "BatchNorm"
+    bottom: "conv03_02_a"
+    top: "bn_conv03_02_b"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv03_02_b"
+    type: "Scale"
+    bottom: "bn_conv03_02_b"
+    top: "bn_conv03_02_b"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu03_02_b"
+    type: "ReLU"
+    bottom: "bn_conv03_02_b"
+    top: "bn_conv03_02_b"
+}
+layer {
+    name: "conv03_02_b"
+    type: "Convolution"
+    bottom: "bn_conv03_02_b"
+    top: "conv03_02_b"
+    param {
+        name: "conv03_wb"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv03_bb"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "eltwise03_02"
+    type: "Eltwise"
+    bottom: "eltwise03_01"
+    bottom: "conv03_02_b"
+    top: "eltwise03_02"
+    eltwise_param {
+        operation: SUM
+    }
+}
+layer {
+    name: "bn_conv03_03_a"
+    type: "BatchNorm"
+    bottom: "eltwise03_02"
+    top: "bn_conv03_03_a"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv03_03_a"
+    type: "Scale"
+    bottom: "bn_conv03_03_a"
+    top: "bn_conv03_03_a"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu03_03_a"
+    type: "ReLU"
+    bottom: "bn_conv03_03_a"
+    top: "bn_conv03_03_a"
+}
+layer {
+    name: "conv03_03_a"
+    type: "Convolution"
+    bottom: "bn_conv03_03_a"
+    top: "conv03_03_a"
+    param {
+        name: "conv03_wa"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv03_ba"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "bn_conv03_03_b"
+    type: "BatchNorm"
+    bottom: "conv03_03_a"
+    top: "bn_conv03_03_b"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv03_03_b"
+    type: "Scale"
+    bottom: "bn_conv03_03_b"
+    top: "bn_conv03_03_b"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu03_03_b"
+    type: "ReLU"
+    bottom: "bn_conv03_03_b"
+    top: "bn_conv03_03_b"
+}
+layer {
+    name: "conv03_03_b"
+    type: "Convolution"
+    bottom: "bn_conv03_03_b"
+    top: "conv03_03_b"
+    param {
+        name: "conv03_wb"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv03_bb"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "eltwise03_03"
+    type: "Eltwise"
+    bottom: "eltwise03_02"
+    bottom: "conv03_03_b"
+    top: "eltwise03_03"
+    eltwise_param {
+        operation: SUM
+    }
+}
+layer {
+    name: "bn_conv03_04_a"
+    type: "BatchNorm"
+    bottom: "eltwise03_03"
+    top: "bn_conv03_04_a"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv03_04_a"
+    type: "Scale"
+    bottom: "bn_conv03_04_a"
+    top: "bn_conv03_04_a"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu03_04_a"
+    type: "ReLU"
+    bottom: "bn_conv03_04_a"
+    top: "bn_conv03_04_a"
+}
+layer {
+    name: "conv03_04_a"
+    type: "Convolution"
+    bottom: "bn_conv03_04_a"
+    top: "conv03_04_a"
+    param {
+        name: "conv03_wa"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv03_ba"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "bn_conv03_04_b"
+    type: "BatchNorm"
+    bottom: "conv03_04_a"
+    top: "bn_conv03_04_b"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv03_04_b"
+    type: "Scale"
+    bottom: "bn_conv03_04_b"
+    top: "bn_conv03_04_b"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu03_04_b"
+    type: "ReLU"
+    bottom: "bn_conv03_04_b"
+    top: "bn_conv03_04_b"
+}
+layer {
+    name: "conv03_04_b"
+    type: "Convolution"
+    bottom: "bn_conv03_04_b"
+    top: "conv03_04_b"
+    param {
+        name: "conv03_wb"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv03_bb"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "eltwise03_04"
+    type: "Eltwise"
+    bottom: "eltwise03_03"
+    bottom: "conv03_04_b"
+    top: "eltwise03_04"
+    eltwise_param {
+        operation: SUM
+    }
+}
+layer {
+    name: "bn_conv03_05_a"
+    type: "BatchNorm"
+    bottom: "eltwise03_04"
+    top: "bn_conv03_05_a"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv03_05_a"
+    type: "Scale"
+    bottom: "bn_conv03_05_a"
+    top: "bn_conv03_05_a"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu03_05_a"
+    type: "ReLU"
+    bottom: "bn_conv03_05_a"
+    top: "bn_conv03_05_a"
+}
+layer {
+    name: "conv03_05_a"
+    type: "Convolution"
+    bottom: "bn_conv03_05_a"
+    top: "conv03_05_a"
+    param {
+        name: "conv03_wa"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv03_ba"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "bn_conv03_05_b"
+    type: "BatchNorm"
+    bottom: "conv03_05_a"
+    top: "bn_conv03_05_b"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv03_05_b"
+    type: "Scale"
+    bottom: "bn_conv03_05_b"
+    top: "bn_conv03_05_b"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu03_05_b"
+    type: "ReLU"
+    bottom: "bn_conv03_05_b"
+    top: "bn_conv03_05_b"
+}
+layer {
+    name: "conv03_05_b"
+    type: "Convolution"
+    bottom: "bn_conv03_05_b"
+    top: "conv03_05_b"
+    param {
+        name: "conv03_wb"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv03_bb"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "eltwise03_05"
+    type: "Eltwise"
+    bottom: "eltwise03_04"
+    bottom: "conv03_05_b"
+    top: "eltwise03_05"
+    eltwise_param {
+        operation: SUM
+    }
+}
+layer {
+    name: "bn_conv03_06_a"
+    type: "BatchNorm"
+    bottom: "eltwise03_05"
+    top: "bn_conv03_06_a"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv03_06_a"
+    type: "Scale"
+    bottom: "bn_conv03_06_a"
+    top: "bn_conv03_06_a"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu03_06_a"
+    type: "ReLU"
+    bottom: "bn_conv03_06_a"
+    top: "bn_conv03_06_a"
+}
+layer {
+    name: "conv03_06_a"
+    type: "Convolution"
+    bottom: "bn_conv03_06_a"
+    top: "conv03_06_a"
+    param {
+        name: "conv03_wa"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv03_ba"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "bn_conv03_06_b"
+    type: "BatchNorm"
+    bottom: "conv03_06_a"
+    top: "bn_conv03_06_b"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv03_06_b"
+    type: "Scale"
+    bottom: "bn_conv03_06_b"
+    top: "bn_conv03_06_b"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu03_06_b"
+    type: "ReLU"
+    bottom: "bn_conv03_06_b"
+    top: "bn_conv03_06_b"
+}
+layer {
+    name: "conv03_06_b"
+    type: "Convolution"
+    bottom: "bn_conv03_06_b"
+    top: "conv03_06_b"
+    param {
+        name: "conv03_wb"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv03_bb"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "eltwise03_06"
+    type: "Eltwise"
+    bottom: "eltwise03_05"
+    bottom: "conv03_06_b"
+    top: "eltwise03_06"
+    eltwise_param {
+        operation: SUM
+    }
+}
+layer {
+    name: "concat03"
+    type: "Concat"
+    bottom: "conv1"
+    bottom: "conv_transition_01"
+    bottom: "conv_transition_02"
+    bottom: "eltwise03_01"
+    bottom: "eltwise03_02"
+    bottom: "eltwise03_03"
+    bottom: "eltwise03_04"
+    bottom: "eltwise03_05"
+    bottom: "eltwise03_06"
+    top: "concat03"
+    concat_param {
+        axis: 1
+    }
+}
+layer {
+    name: "bn_conv_transition_03"
+    type: "BatchNorm"
+    bottom: "concat03"
+    top: "bn_conv_transition_03"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv_transition_03"
+    type: "Scale"
+    bottom: "bn_conv_transition_03"
+    top: "bn_conv_transition_03"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu_transition_03"
+    type: "ReLU"
+    bottom: "bn_conv_transition_03"
+    top: "bn_conv_transition_03"
+}
+layer {
+    name: "conv_transition_03"
+    type: "Convolution"
+    bottom: "bn_conv_transition_03"
+    top: "conv_transition_03"
+    param {
+        lr_mult: 1.000000
+    }
+    param {
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 1
+        stride: 1
+        pad: 0
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "bn_conv04_01_a"
+    type: "BatchNorm"
+    bottom: "conv_transition_03"
+    top: "bn_conv04_01_a"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv04_01_a"
+    type: "Scale"
+    bottom: "bn_conv04_01_a"
+    top: "bn_conv04_01_a"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu04_01_a"
+    type: "ReLU"
+    bottom: "bn_conv04_01_a"
+    top: "bn_conv04_01_a"
+}
+layer {
+    name: "conv04_01_a"
+    type: "Convolution"
+    bottom: "bn_conv04_01_a"
+    top: "conv04_01_a"
+    param {
+        name: "conv04_wa"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv04_ba"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "bn_conv04_01_b"
+    type: "BatchNorm"
+    bottom: "conv04_01_a"
+    top: "bn_conv04_01_b"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv04_01_b"
+    type: "Scale"
+    bottom: "bn_conv04_01_b"
+    top: "bn_conv04_01_b"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu04_01_b"
+    type: "ReLU"
+    bottom: "bn_conv04_01_b"
+    top: "bn_conv04_01_b"
+}
+layer {
+    name: "conv04_01_b"
+    type: "Convolution"
+    bottom: "bn_conv04_01_b"
+    top: "conv04_01_b"
+    param {
+        name: "conv04_wb"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv04_bb"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "eltwise04_01"
+    type: "Eltwise"
+    bottom: "conv_transition_03"
+    bottom: "conv04_01_b"
+    top: "eltwise04_01"
+    eltwise_param {
+        operation: SUM
+    }
+}
+layer {
+    name: "bn_conv04_02_a"
+    type: "BatchNorm"
+    bottom: "eltwise04_01"
+    top: "bn_conv04_02_a"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv04_02_a"
+    type: "Scale"
+    bottom: "bn_conv04_02_a"
+    top: "bn_conv04_02_a"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu04_02_a"
+    type: "ReLU"
+    bottom: "bn_conv04_02_a"
+    top: "bn_conv04_02_a"
+}
+layer {
+    name: "conv04_02_a"
+    type: "Convolution"
+    bottom: "bn_conv04_02_a"
+    top: "conv04_02_a"
+    param {
+        name: "conv04_wa"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv04_ba"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "bn_conv04_02_b"
+    type: "BatchNorm"
+    bottom: "conv04_02_a"
+    top: "bn_conv04_02_b"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv04_02_b"
+    type: "Scale"
+    bottom: "bn_conv04_02_b"
+    top: "bn_conv04_02_b"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu04_02_b"
+    type: "ReLU"
+    bottom: "bn_conv04_02_b"
+    top: "bn_conv04_02_b"
+}
+layer {
+    name: "conv04_02_b"
+    type: "Convolution"
+    bottom: "bn_conv04_02_b"
+    top: "conv04_02_b"
+    param {
+        name: "conv04_wb"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv04_bb"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "eltwise04_02"
+    type: "Eltwise"
+    bottom: "eltwise04_01"
+    bottom: "conv04_02_b"
+    top: "eltwise04_02"
+    eltwise_param {
+        operation: SUM
+    }
+}
+layer {
+    name: "bn_conv04_03_a"
+    type: "BatchNorm"
+    bottom: "eltwise04_02"
+    top: "bn_conv04_03_a"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv04_03_a"
+    type: "Scale"
+    bottom: "bn_conv04_03_a"
+    top: "bn_conv04_03_a"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu04_03_a"
+    type: "ReLU"
+    bottom: "bn_conv04_03_a"
+    top: "bn_conv04_03_a"
+}
+layer {
+    name: "conv04_03_a"
+    type: "Convolution"
+    bottom: "bn_conv04_03_a"
+    top: "conv04_03_a"
+    param {
+        name: "conv04_wa"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv04_ba"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "bn_conv04_03_b"
+    type: "BatchNorm"
+    bottom: "conv04_03_a"
+    top: "bn_conv04_03_b"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv04_03_b"
+    type: "Scale"
+    bottom: "bn_conv04_03_b"
+    top: "bn_conv04_03_b"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu04_03_b"
+    type: "ReLU"
+    bottom: "bn_conv04_03_b"
+    top: "bn_conv04_03_b"
+}
+layer {
+    name: "conv04_03_b"
+    type: "Convolution"
+    bottom: "bn_conv04_03_b"
+    top: "conv04_03_b"
+    param {
+        name: "conv04_wb"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv04_bb"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "eltwise04_03"
+    type: "Eltwise"
+    bottom: "eltwise04_02"
+    bottom: "conv04_03_b"
+    top: "eltwise04_03"
+    eltwise_param {
+        operation: SUM
+    }
+}
+layer {
+    name: "bn_conv04_04_a"
+    type: "BatchNorm"
+    bottom: "eltwise04_03"
+    top: "bn_conv04_04_a"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv04_04_a"
+    type: "Scale"
+    bottom: "bn_conv04_04_a"
+    top: "bn_conv04_04_a"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu04_04_a"
+    type: "ReLU"
+    bottom: "bn_conv04_04_a"
+    top: "bn_conv04_04_a"
+}
+layer {
+    name: "conv04_04_a"
+    type: "Convolution"
+    bottom: "bn_conv04_04_a"
+    top: "conv04_04_a"
+    param {
+        name: "conv04_wa"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv04_ba"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "bn_conv04_04_b"
+    type: "BatchNorm"
+    bottom: "conv04_04_a"
+    top: "bn_conv04_04_b"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv04_04_b"
+    type: "Scale"
+    bottom: "bn_conv04_04_b"
+    top: "bn_conv04_04_b"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu04_04_b"
+    type: "ReLU"
+    bottom: "bn_conv04_04_b"
+    top: "bn_conv04_04_b"
+}
+layer {
+    name: "conv04_04_b"
+    type: "Convolution"
+    bottom: "bn_conv04_04_b"
+    top: "conv04_04_b"
+    param {
+        name: "conv04_wb"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv04_bb"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "eltwise04_04"
+    type: "Eltwise"
+    bottom: "eltwise04_03"
+    bottom: "conv04_04_b"
+    top: "eltwise04_04"
+    eltwise_param {
+        operation: SUM
+    }
+}
+layer {
+    name: "bn_conv04_05_a"
+    type: "BatchNorm"
+    bottom: "eltwise04_04"
+    top: "bn_conv04_05_a"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv04_05_a"
+    type: "Scale"
+    bottom: "bn_conv04_05_a"
+    top: "bn_conv04_05_a"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu04_05_a"
+    type: "ReLU"
+    bottom: "bn_conv04_05_a"
+    top: "bn_conv04_05_a"
+}
+layer {
+    name: "conv04_05_a"
+    type: "Convolution"
+    bottom: "bn_conv04_05_a"
+    top: "conv04_05_a"
+    param {
+        name: "conv04_wa"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv04_ba"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "bn_conv04_05_b"
+    type: "BatchNorm"
+    bottom: "conv04_05_a"
+    top: "bn_conv04_05_b"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv04_05_b"
+    type: "Scale"
+    bottom: "bn_conv04_05_b"
+    top: "bn_conv04_05_b"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu04_05_b"
+    type: "ReLU"
+    bottom: "bn_conv04_05_b"
+    top: "bn_conv04_05_b"
+}
+layer {
+    name: "conv04_05_b"
+    type: "Convolution"
+    bottom: "bn_conv04_05_b"
+    top: "conv04_05_b"
+    param {
+        name: "conv04_wb"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv04_bb"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "eltwise04_05"
+    type: "Eltwise"
+    bottom: "eltwise04_04"
+    bottom: "conv04_05_b"
+    top: "eltwise04_05"
+    eltwise_param {
+        operation: SUM
+    }
+}
+layer {
+    name: "bn_conv04_06_a"
+    type: "BatchNorm"
+    bottom: "eltwise04_05"
+    top: "bn_conv04_06_a"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv04_06_a"
+    type: "Scale"
+    bottom: "bn_conv04_06_a"
+    top: "bn_conv04_06_a"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu04_06_a"
+    type: "ReLU"
+    bottom: "bn_conv04_06_a"
+    top: "bn_conv04_06_a"
+}
+layer {
+    name: "conv04_06_a"
+    type: "Convolution"
+    bottom: "bn_conv04_06_a"
+    top: "conv04_06_a"
+    param {
+        name: "conv04_wa"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv04_ba"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "bn_conv04_06_b"
+    type: "BatchNorm"
+    bottom: "conv04_06_a"
+    top: "bn_conv04_06_b"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv04_06_b"
+    type: "Scale"
+    bottom: "bn_conv04_06_b"
+    top: "bn_conv04_06_b"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu04_06_b"
+    type: "ReLU"
+    bottom: "bn_conv04_06_b"
+    top: "bn_conv04_06_b"
+}
+layer {
+    name: "conv04_06_b"
+    type: "Convolution"
+    bottom: "bn_conv04_06_b"
+    top: "conv04_06_b"
+    param {
+        name: "conv04_wb"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv04_bb"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "eltwise04_06"
+    type: "Eltwise"
+    bottom: "eltwise04_05"
+    bottom: "conv04_06_b"
+    top: "eltwise04_06"
+    eltwise_param {
+        operation: SUM
+    }
+}
+layer {
+    name: "concat04"
+    type: "Concat"
+    bottom: "conv1"
+    bottom: "conv_transition_01"
+    bottom: "conv_transition_02"
+    bottom: "conv_transition_03"
+    bottom: "eltwise04_01"
+    bottom: "eltwise04_02"
+    bottom: "eltwise04_03"
+    bottom: "eltwise04_04"
+    bottom: "eltwise04_05"
+    bottom: "eltwise04_06"
+    top: "concat04"
+    concat_param {
+        axis: 1
+    }
+}
+layer {
+    name: "bn_conv_transition_04"
+    type: "BatchNorm"
+    bottom: "concat04"
+    top: "bn_conv_transition_04"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv_transition_04"
+    type: "Scale"
+    bottom: "bn_conv_transition_04"
+    top: "bn_conv_transition_04"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu_transition_04"
+    type: "ReLU"
+    bottom: "bn_conv_transition_04"
+    top: "bn_conv_transition_04"
+}
+layer {
+    name: "conv_transition_04"
+    type: "Convolution"
+    bottom: "bn_conv_transition_04"
+    top: "conv_transition_04"
+    param {
+        lr_mult: 1.000000
+    }
+    param {
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 1
+        stride: 1
+        pad: 0
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "bn_conv05_01_a"
+    type: "BatchNorm"
+    bottom: "conv_transition_04"
+    top: "bn_conv05_01_a"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv05_01_a"
+    type: "Scale"
+    bottom: "bn_conv05_01_a"
+    top: "bn_conv05_01_a"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu05_01_a"
+    type: "ReLU"
+    bottom: "bn_conv05_01_a"
+    top: "bn_conv05_01_a"
+}
+layer {
+    name: "conv05_01_a"
+    type: "Convolution"
+    bottom: "bn_conv05_01_a"
+    top: "conv05_01_a"
+    param {
+        name: "conv05_wa"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv05_ba"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "bn_conv05_01_b"
+    type: "BatchNorm"
+    bottom: "conv05_01_a"
+    top: "bn_conv05_01_b"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv05_01_b"
+    type: "Scale"
+    bottom: "bn_conv05_01_b"
+    top: "bn_conv05_01_b"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu05_01_b"
+    type: "ReLU"
+    bottom: "bn_conv05_01_b"
+    top: "bn_conv05_01_b"
+}
+layer {
+    name: "conv05_01_b"
+    type: "Convolution"
+    bottom: "bn_conv05_01_b"
+    top: "conv05_01_b"
+    param {
+        name: "conv05_wb"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv05_bb"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "eltwise05_01"
+    type: "Eltwise"
+    bottom: "conv_transition_04"
+    bottom: "conv05_01_b"
+    top: "eltwise05_01"
+    eltwise_param {
+        operation: SUM
+    }
+}
+layer {
+    name: "bn_conv05_02_a"
+    type: "BatchNorm"
+    bottom: "eltwise05_01"
+    top: "bn_conv05_02_a"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv05_02_a"
+    type: "Scale"
+    bottom: "bn_conv05_02_a"
+    top: "bn_conv05_02_a"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu05_02_a"
+    type: "ReLU"
+    bottom: "bn_conv05_02_a"
+    top: "bn_conv05_02_a"
+}
+layer {
+    name: "conv05_02_a"
+    type: "Convolution"
+    bottom: "bn_conv05_02_a"
+    top: "conv05_02_a"
+    param {
+        name: "conv05_wa"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv05_ba"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "bn_conv05_02_b"
+    type: "BatchNorm"
+    bottom: "conv05_02_a"
+    top: "bn_conv05_02_b"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv05_02_b"
+    type: "Scale"
+    bottom: "bn_conv05_02_b"
+    top: "bn_conv05_02_b"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu05_02_b"
+    type: "ReLU"
+    bottom: "bn_conv05_02_b"
+    top: "bn_conv05_02_b"
+}
+layer {
+    name: "conv05_02_b"
+    type: "Convolution"
+    bottom: "bn_conv05_02_b"
+    top: "conv05_02_b"
+    param {
+        name: "conv05_wb"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv05_bb"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "eltwise05_02"
+    type: "Eltwise"
+    bottom: "eltwise05_01"
+    bottom: "conv05_02_b"
+    top: "eltwise05_02"
+    eltwise_param {
+        operation: SUM
+    }
+}
+layer {
+    name: "bn_conv05_03_a"
+    type: "BatchNorm"
+    bottom: "eltwise05_02"
+    top: "bn_conv05_03_a"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv05_03_a"
+    type: "Scale"
+    bottom: "bn_conv05_03_a"
+    top: "bn_conv05_03_a"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu05_03_a"
+    type: "ReLU"
+    bottom: "bn_conv05_03_a"
+    top: "bn_conv05_03_a"
+}
+layer {
+    name: "conv05_03_a"
+    type: "Convolution"
+    bottom: "bn_conv05_03_a"
+    top: "conv05_03_a"
+    param {
+        name: "conv05_wa"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv05_ba"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "bn_conv05_03_b"
+    type: "BatchNorm"
+    bottom: "conv05_03_a"
+    top: "bn_conv05_03_b"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv05_03_b"
+    type: "Scale"
+    bottom: "bn_conv05_03_b"
+    top: "bn_conv05_03_b"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu05_03_b"
+    type: "ReLU"
+    bottom: "bn_conv05_03_b"
+    top: "bn_conv05_03_b"
+}
+layer {
+    name: "conv05_03_b"
+    type: "Convolution"
+    bottom: "bn_conv05_03_b"
+    top: "conv05_03_b"
+    param {
+        name: "conv05_wb"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv05_bb"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "eltwise05_03"
+    type: "Eltwise"
+    bottom: "eltwise05_02"
+    bottom: "conv05_03_b"
+    top: "eltwise05_03"
+    eltwise_param {
+        operation: SUM
+    }
+}
+layer {
+    name: "bn_conv05_04_a"
+    type: "BatchNorm"
+    bottom: "eltwise05_03"
+    top: "bn_conv05_04_a"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv05_04_a"
+    type: "Scale"
+    bottom: "bn_conv05_04_a"
+    top: "bn_conv05_04_a"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu05_04_a"
+    type: "ReLU"
+    bottom: "bn_conv05_04_a"
+    top: "bn_conv05_04_a"
+}
+layer {
+    name: "conv05_04_a"
+    type: "Convolution"
+    bottom: "bn_conv05_04_a"
+    top: "conv05_04_a"
+    param {
+        name: "conv05_wa"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv05_ba"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "bn_conv05_04_b"
+    type: "BatchNorm"
+    bottom: "conv05_04_a"
+    top: "bn_conv05_04_b"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv05_04_b"
+    type: "Scale"
+    bottom: "bn_conv05_04_b"
+    top: "bn_conv05_04_b"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu05_04_b"
+    type: "ReLU"
+    bottom: "bn_conv05_04_b"
+    top: "bn_conv05_04_b"
+}
+layer {
+    name: "conv05_04_b"
+    type: "Convolution"
+    bottom: "bn_conv05_04_b"
+    top: "conv05_04_b"
+    param {
+        name: "conv05_wb"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv05_bb"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "eltwise05_04"
+    type: "Eltwise"
+    bottom: "eltwise05_03"
+    bottom: "conv05_04_b"
+    top: "eltwise05_04"
+    eltwise_param {
+        operation: SUM
+    }
+}
+layer {
+    name: "bn_conv05_05_a"
+    type: "BatchNorm"
+    bottom: "eltwise05_04"
+    top: "bn_conv05_05_a"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv05_05_a"
+    type: "Scale"
+    bottom: "bn_conv05_05_a"
+    top: "bn_conv05_05_a"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu05_05_a"
+    type: "ReLU"
+    bottom: "bn_conv05_05_a"
+    top: "bn_conv05_05_a"
+}
+layer {
+    name: "conv05_05_a"
+    type: "Convolution"
+    bottom: "bn_conv05_05_a"
+    top: "conv05_05_a"
+    param {
+        name: "conv05_wa"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv05_ba"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "bn_conv05_05_b"
+    type: "BatchNorm"
+    bottom: "conv05_05_a"
+    top: "bn_conv05_05_b"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv05_05_b"
+    type: "Scale"
+    bottom: "bn_conv05_05_b"
+    top: "bn_conv05_05_b"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu05_05_b"
+    type: "ReLU"
+    bottom: "bn_conv05_05_b"
+    top: "bn_conv05_05_b"
+}
+layer {
+    name: "conv05_05_b"
+    type: "Convolution"
+    bottom: "bn_conv05_05_b"
+    top: "conv05_05_b"
+    param {
+        name: "conv05_wb"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv05_bb"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "eltwise05_05"
+    type: "Eltwise"
+    bottom: "eltwise05_04"
+    bottom: "conv05_05_b"
+    top: "eltwise05_05"
+    eltwise_param {
+        operation: SUM
+    }
+}
+layer {
+    name: "bn_conv05_06_a"
+    type: "BatchNorm"
+    bottom: "eltwise05_05"
+    top: "bn_conv05_06_a"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv05_06_a"
+    type: "Scale"
+    bottom: "bn_conv05_06_a"
+    top: "bn_conv05_06_a"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu05_06_a"
+    type: "ReLU"
+    bottom: "bn_conv05_06_a"
+    top: "bn_conv05_06_a"
+}
+layer {
+    name: "conv05_06_a"
+    type: "Convolution"
+    bottom: "bn_conv05_06_a"
+    top: "conv05_06_a"
+    param {
+        name: "conv05_wa"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv05_ba"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "bn_conv05_06_b"
+    type: "BatchNorm"
+    bottom: "conv05_06_a"
+    top: "bn_conv05_06_b"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv05_06_b"
+    type: "Scale"
+    bottom: "bn_conv05_06_b"
+    top: "bn_conv05_06_b"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu05_06_b"
+    type: "ReLU"
+    bottom: "bn_conv05_06_b"
+    top: "bn_conv05_06_b"
+}
+layer {
+    name: "conv05_06_b"
+    type: "Convolution"
+    bottom: "bn_conv05_06_b"
+    top: "conv05_06_b"
+    param {
+        name: "conv05_wb"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv05_bb"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "eltwise05_06"
+    type: "Eltwise"
+    bottom: "eltwise05_05"
+    bottom: "conv05_06_b"
+    top: "eltwise05_06"
+    eltwise_param {
+        operation: SUM
+    }
+}
+layer {
+    name: "concat05"
+    type: "Concat"
+    bottom: "conv1"
+    bottom: "conv_transition_01"
+    bottom: "conv_transition_02"
+    bottom: "conv_transition_03"
+    bottom: "conv_transition_04"
+    bottom: "eltwise05_01"
+    bottom: "eltwise05_02"
+    bottom: "eltwise05_03"
+    bottom: "eltwise05_04"
+    bottom: "eltwise05_05"
+    bottom: "eltwise05_06"
+    top: "concat05"
+    concat_param {
+        axis: 1
+    }
+}
+layer {
+    name: "bn_conv_transition_05"
+    type: "BatchNorm"
+    bottom: "concat05"
+    top: "bn_conv_transition_05"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv_transition_05"
+    type: "Scale"
+    bottom: "bn_conv_transition_05"
+    top: "bn_conv_transition_05"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu_transition_05"
+    type: "ReLU"
+    bottom: "bn_conv_transition_05"
+    top: "bn_conv_transition_05"
+}
+layer {
+    name: "conv_transition_05"
+    type: "Convolution"
+    bottom: "bn_conv_transition_05"
+    top: "conv_transition_05"
+    param {
+        lr_mult: 1.000000
+    }
+    param {
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 1
+        stride: 1
+        pad: 0
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "bn_conv06_01_a"
+    type: "BatchNorm"
+    bottom: "conv_transition_05"
+    top: "bn_conv06_01_a"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv06_01_a"
+    type: "Scale"
+    bottom: "bn_conv06_01_a"
+    top: "bn_conv06_01_a"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu06_01_a"
+    type: "ReLU"
+    bottom: "bn_conv06_01_a"
+    top: "bn_conv06_01_a"
+}
+layer {
+    name: "conv06_01_a"
+    type: "Convolution"
+    bottom: "bn_conv06_01_a"
+    top: "conv06_01_a"
+    param {
+        name: "conv06_wa"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv06_ba"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "bn_conv06_01_b"
+    type: "BatchNorm"
+    bottom: "conv06_01_a"
+    top: "bn_conv06_01_b"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv06_01_b"
+    type: "Scale"
+    bottom: "bn_conv06_01_b"
+    top: "bn_conv06_01_b"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu06_01_b"
+    type: "ReLU"
+    bottom: "bn_conv06_01_b"
+    top: "bn_conv06_01_b"
+}
+layer {
+    name: "conv06_01_b"
+    type: "Convolution"
+    bottom: "bn_conv06_01_b"
+    top: "conv06_01_b"
+    param {
+        name: "conv06_wb"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv06_bb"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "eltwise06_01"
+    type: "Eltwise"
+    bottom: "conv_transition_05"
+    bottom: "conv06_01_b"
+    top: "eltwise06_01"
+    eltwise_param {
+        operation: SUM
+    }
+}
+layer {
+    name: "bn_conv06_02_a"
+    type: "BatchNorm"
+    bottom: "eltwise06_01"
+    top: "bn_conv06_02_a"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv06_02_a"
+    type: "Scale"
+    bottom: "bn_conv06_02_a"
+    top: "bn_conv06_02_a"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu06_02_a"
+    type: "ReLU"
+    bottom: "bn_conv06_02_a"
+    top: "bn_conv06_02_a"
+}
+layer {
+    name: "conv06_02_a"
+    type: "Convolution"
+    bottom: "bn_conv06_02_a"
+    top: "conv06_02_a"
+    param {
+        name: "conv06_wa"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv06_ba"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "bn_conv06_02_b"
+    type: "BatchNorm"
+    bottom: "conv06_02_a"
+    top: "bn_conv06_02_b"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv06_02_b"
+    type: "Scale"
+    bottom: "bn_conv06_02_b"
+    top: "bn_conv06_02_b"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu06_02_b"
+    type: "ReLU"
+    bottom: "bn_conv06_02_b"
+    top: "bn_conv06_02_b"
+}
+layer {
+    name: "conv06_02_b"
+    type: "Convolution"
+    bottom: "bn_conv06_02_b"
+    top: "conv06_02_b"
+    param {
+        name: "conv06_wb"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv06_bb"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "eltwise06_02"
+    type: "Eltwise"
+    bottom: "eltwise06_01"
+    bottom: "conv06_02_b"
+    top: "eltwise06_02"
+    eltwise_param {
+        operation: SUM
+    }
+}
+layer {
+    name: "bn_conv06_03_a"
+    type: "BatchNorm"
+    bottom: "eltwise06_02"
+    top: "bn_conv06_03_a"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv06_03_a"
+    type: "Scale"
+    bottom: "bn_conv06_03_a"
+    top: "bn_conv06_03_a"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu06_03_a"
+    type: "ReLU"
+    bottom: "bn_conv06_03_a"
+    top: "bn_conv06_03_a"
+}
+layer {
+    name: "conv06_03_a"
+    type: "Convolution"
+    bottom: "bn_conv06_03_a"
+    top: "conv06_03_a"
+    param {
+        name: "conv06_wa"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv06_ba"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "bn_conv06_03_b"
+    type: "BatchNorm"
+    bottom: "conv06_03_a"
+    top: "bn_conv06_03_b"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv06_03_b"
+    type: "Scale"
+    bottom: "bn_conv06_03_b"
+    top: "bn_conv06_03_b"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu06_03_b"
+    type: "ReLU"
+    bottom: "bn_conv06_03_b"
+    top: "bn_conv06_03_b"
+}
+layer {
+    name: "conv06_03_b"
+    type: "Convolution"
+    bottom: "bn_conv06_03_b"
+    top: "conv06_03_b"
+    param {
+        name: "conv06_wb"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv06_bb"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "eltwise06_03"
+    type: "Eltwise"
+    bottom: "eltwise06_02"
+    bottom: "conv06_03_b"
+    top: "eltwise06_03"
+    eltwise_param {
+        operation: SUM
+    }
+}
+layer {
+    name: "bn_conv06_04_a"
+    type: "BatchNorm"
+    bottom: "eltwise06_03"
+    top: "bn_conv06_04_a"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv06_04_a"
+    type: "Scale"
+    bottom: "bn_conv06_04_a"
+    top: "bn_conv06_04_a"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu06_04_a"
+    type: "ReLU"
+    bottom: "bn_conv06_04_a"
+    top: "bn_conv06_04_a"
+}
+layer {
+    name: "conv06_04_a"
+    type: "Convolution"
+    bottom: "bn_conv06_04_a"
+    top: "conv06_04_a"
+    param {
+        name: "conv06_wa"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv06_ba"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "bn_conv06_04_b"
+    type: "BatchNorm"
+    bottom: "conv06_04_a"
+    top: "bn_conv06_04_b"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv06_04_b"
+    type: "Scale"
+    bottom: "bn_conv06_04_b"
+    top: "bn_conv06_04_b"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu06_04_b"
+    type: "ReLU"
+    bottom: "bn_conv06_04_b"
+    top: "bn_conv06_04_b"
+}
+layer {
+    name: "conv06_04_b"
+    type: "Convolution"
+    bottom: "bn_conv06_04_b"
+    top: "conv06_04_b"
+    param {
+        name: "conv06_wb"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv06_bb"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "eltwise06_04"
+    type: "Eltwise"
+    bottom: "eltwise06_03"
+    bottom: "conv06_04_b"
+    top: "eltwise06_04"
+    eltwise_param {
+        operation: SUM
+    }
+}
+layer {
+    name: "bn_conv06_05_a"
+    type: "BatchNorm"
+    bottom: "eltwise06_04"
+    top: "bn_conv06_05_a"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv06_05_a"
+    type: "Scale"
+    bottom: "bn_conv06_05_a"
+    top: "bn_conv06_05_a"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu06_05_a"
+    type: "ReLU"
+    bottom: "bn_conv06_05_a"
+    top: "bn_conv06_05_a"
+}
+layer {
+    name: "conv06_05_a"
+    type: "Convolution"
+    bottom: "bn_conv06_05_a"
+    top: "conv06_05_a"
+    param {
+        name: "conv06_wa"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv06_ba"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "bn_conv06_05_b"
+    type: "BatchNorm"
+    bottom: "conv06_05_a"
+    top: "bn_conv06_05_b"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv06_05_b"
+    type: "Scale"
+    bottom: "bn_conv06_05_b"
+    top: "bn_conv06_05_b"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu06_05_b"
+    type: "ReLU"
+    bottom: "bn_conv06_05_b"
+    top: "bn_conv06_05_b"
+}
+layer {
+    name: "conv06_05_b"
+    type: "Convolution"
+    bottom: "bn_conv06_05_b"
+    top: "conv06_05_b"
+    param {
+        name: "conv06_wb"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv06_bb"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "eltwise06_05"
+    type: "Eltwise"
+    bottom: "eltwise06_04"
+    bottom: "conv06_05_b"
+    top: "eltwise06_05"
+    eltwise_param {
+        operation: SUM
+    }
+}
+layer {
+    name: "bn_conv06_06_a"
+    type: "BatchNorm"
+    bottom: "eltwise06_05"
+    top: "bn_conv06_06_a"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv06_06_a"
+    type: "Scale"
+    bottom: "bn_conv06_06_a"
+    top: "bn_conv06_06_a"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu06_06_a"
+    type: "ReLU"
+    bottom: "bn_conv06_06_a"
+    top: "bn_conv06_06_a"
+}
+layer {
+    name: "conv06_06_a"
+    type: "Convolution"
+    bottom: "bn_conv06_06_a"
+    top: "conv06_06_a"
+    param {
+        name: "conv06_wa"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv06_ba"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "bn_conv06_06_b"
+    type: "BatchNorm"
+    bottom: "conv06_06_a"
+    top: "bn_conv06_06_b"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv06_06_b"
+    type: "Scale"
+    bottom: "bn_conv06_06_b"
+    top: "bn_conv06_06_b"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu06_06_b"
+    type: "ReLU"
+    bottom: "bn_conv06_06_b"
+    top: "bn_conv06_06_b"
+}
+layer {
+    name: "conv06_06_b"
+    type: "Convolution"
+    bottom: "bn_conv06_06_b"
+    top: "conv06_06_b"
+    param {
+        name: "conv06_wb"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "conv06_bb"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "eltwise06_06"
+    type: "Eltwise"
+    bottom: "eltwise06_05"
+    bottom: "conv06_06_b"
+    top: "eltwise06_06"
+    eltwise_param {
+        operation: SUM
+    }
+}
+layer {
+    name: "concat06"
+    type: "Concat"
+    bottom: "conv1"
+    bottom: "conv_transition_01"
+    bottom: "conv_transition_02"
+    bottom: "conv_transition_03"
+    bottom: "conv_transition_04"
+    bottom: "conv_transition_05"
+    bottom: "eltwise06_01"
+    bottom: "eltwise06_02"
+    bottom: "eltwise06_03"
+    bottom: "eltwise06_04"
+    bottom: "eltwise06_05"
+    bottom: "eltwise06_06"
+    top: "concat06"
+    concat_param {
+        axis: 1
+    }
+}
+layer {
+    name: "bn_conv_transition_06"
+    type: "BatchNorm"
+    bottom: "concat06"
+    top: "bn_conv_transition_06"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv_transition_06"
+    type: "Scale"
+    bottom: "bn_conv_transition_06"
+    top: "bn_conv_transition_06"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu_transition_06"
+    type: "ReLU"
+    bottom: "bn_conv_transition_06"
+    top: "bn_conv_transition_06"
+}
+layer {
+    name: "conv_transition_06"
+    type: "Convolution"
+    bottom: "bn_conv_transition_06"
+    top: "conv_transition_06"
+    param {
+        lr_mult: 1.000000
+    }
+    param {
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 64
+        kernel_size: 1
+        stride: 1
+        pad: 0
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "bn_conv_end_01"
+    type: "BatchNorm"
+    bottom: "conv_transition_01"
+    top: "bn_conv_end_01"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv_end_01"
+    type: "Scale"
+    bottom: "bn_conv_end_01"
+    top: "bn_conv_end_01"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu_end_01"
+    type: "ReLU"
+    bottom: "bn_conv_end_01"
+    top: "bn_conv_end_01"
+}
+layer {
+    name: "conv_end_01"
+    type: "Convolution"
+    bottom: "bn_conv_end_01"
+    top: "conv_end_01"
+    param {
+        name: "Recon_w"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "Recon_b"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 1
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "HR_recovery_01"
+    type: "Eltwise"
+    bottom: "data"
+    bottom: "conv_end_01"
+    top: "HR_recovery_01"
+    eltwise_param {
+        operation: SUM
+    }
+}
+layer {
+    name: "loss_01"
+    type: "EuclideanLoss"
+    bottom: "HR_recovery_01"
+    bottom: "label"
+    top: "loss_01"
+    loss_weight: 1
+}
+layer {
+    name: "weight_output_end_01"
+    type: "Scale"
+    bottom: "HR_recovery_01"
+    top: "weight_output_end_01"
+    scale_param {
+        bias_term: false
+    }
+}
+layer {
+    name: "bn_conv_end_02"
+    type: "BatchNorm"
+    bottom: "conv_transition_02"
+    top: "bn_conv_end_02"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv_end_02"
+    type: "Scale"
+    bottom: "bn_conv_end_02"
+    top: "bn_conv_end_02"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu_end_02"
+    type: "ReLU"
+    bottom: "bn_conv_end_02"
+    top: "bn_conv_end_02"
+}
+layer {
+    name: "conv_end_02"
+    type: "Convolution"
+    bottom: "bn_conv_end_02"
+    top: "conv_end_02"
+    param {
+        name: "Recon_w"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "Recon_b"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 1
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "HR_recovery_02"
+    type: "Eltwise"
+    bottom: "data"
+    bottom: "conv_end_02"
+    top: "HR_recovery_02"
+    eltwise_param {
+        operation: SUM
+    }
+}
+layer {
+    name: "loss_02"
+    type: "EuclideanLoss"
+    bottom: "HR_recovery_02"
+    bottom: "label"
+    top: "loss_02"
+    loss_weight: 1
+}
+layer {
+    name: "weight_output_end_02"
+    type: "Scale"
+    bottom: "HR_recovery_02"
+    top: "weight_output_end_02"
+    scale_param {
+        bias_term: false
+    }
+}
+layer {
+    name: "bn_conv_end_03"
+    type: "BatchNorm"
+    bottom: "conv_transition_03"
+    top: "bn_conv_end_03"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv_end_03"
+    type: "Scale"
+    bottom: "bn_conv_end_03"
+    top: "bn_conv_end_03"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu_end_03"
+    type: "ReLU"
+    bottom: "bn_conv_end_03"
+    top: "bn_conv_end_03"
+}
+layer {
+    name: "conv_end_03"
+    type: "Convolution"
+    bottom: "bn_conv_end_03"
+    top: "conv_end_03"
+    param {
+        name: "Recon_w"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "Recon_b"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 1
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "HR_recovery_03"
+    type: "Eltwise"
+    bottom: "data"
+    bottom: "conv_end_03"
+    top: "HR_recovery_03"
+    eltwise_param {
+        operation: SUM
+    }
+}
+layer {
+    name: "loss_03"
+    type: "EuclideanLoss"
+    bottom: "HR_recovery_03"
+    bottom: "label"
+    top: "loss_03"
+    loss_weight: 1
+}
+layer {
+    name: "weight_output_end_03"
+    type: "Scale"
+    bottom: "HR_recovery_03"
+    top: "weight_output_end_03"
+    scale_param {
+        bias_term: false
+    }
+}
+layer {
+    name: "bn_conv_end_04"
+    type: "BatchNorm"
+    bottom: "conv_transition_04"
+    top: "bn_conv_end_04"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv_end_04"
+    type: "Scale"
+    bottom: "bn_conv_end_04"
+    top: "bn_conv_end_04"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu_end_04"
+    type: "ReLU"
+    bottom: "bn_conv_end_04"
+    top: "bn_conv_end_04"
+}
+layer {
+    name: "conv_end_04"
+    type: "Convolution"
+    bottom: "bn_conv_end_04"
+    top: "conv_end_04"
+    param {
+        name: "Recon_w"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "Recon_b"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 1
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "HR_recovery_04"
+    type: "Eltwise"
+    bottom: "data"
+    bottom: "conv_end_04"
+    top: "HR_recovery_04"
+    eltwise_param {
+        operation: SUM
+    }
+}
+layer {
+    name: "loss_04"
+    type: "EuclideanLoss"
+    bottom: "HR_recovery_04"
+    bottom: "label"
+    top: "loss_04"
+    loss_weight: 1
+}
+layer {
+    name: "weight_output_end_04"
+    type: "Scale"
+    bottom: "HR_recovery_04"
+    top: "weight_output_end_04"
+    scale_param {
+        bias_term: false
+    }
+}
+layer {
+    name: "bn_conv_end_05"
+    type: "BatchNorm"
+    bottom: "conv_transition_05"
+    top: "bn_conv_end_05"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv_end_05"
+    type: "Scale"
+    bottom: "bn_conv_end_05"
+    top: "bn_conv_end_05"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu_end_05"
+    type: "ReLU"
+    bottom: "bn_conv_end_05"
+    top: "bn_conv_end_05"
+}
+layer {
+    name: "conv_end_05"
+    type: "Convolution"
+    bottom: "bn_conv_end_05"
+    top: "conv_end_05"
+    param {
+        name: "Recon_w"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "Recon_b"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 1
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "HR_recovery_05"
+    type: "Eltwise"
+    bottom: "data"
+    bottom: "conv_end_05"
+    top: "HR_recovery_05"
+    eltwise_param {
+        operation: SUM
+    }
+}
+layer {
+    name: "loss_05"
+    type: "EuclideanLoss"
+    bottom: "HR_recovery_05"
+    bottom: "label"
+    top: "loss_05"
+    loss_weight: 1
+}
+layer {
+    name: "weight_output_end_05"
+    type: "Scale"
+    bottom: "HR_recovery_05"
+    top: "weight_output_end_05"
+    scale_param {
+        bias_term: false
+    }
+}
+layer {
+    name: "bn_conv_end_06"
+    type: "BatchNorm"
+    bottom: "conv_transition_06"
+    top: "bn_conv_end_06"
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+    param {
+        lr_mult: 0
+    }
+}
+layer {
+    name: "scale_conv_end_06"
+    type: "Scale"
+    bottom: "bn_conv_end_06"
+    top: "bn_conv_end_06"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+    name: "relu_end_06"
+    type: "ReLU"
+    bottom: "bn_conv_end_06"
+    top: "bn_conv_end_06"
+}
+layer {
+    name: "conv_end_06"
+    type: "Convolution"
+    bottom: "bn_conv_end_06"
+    top: "conv_end_06"
+    param {
+        name: "Recon_w"
+        lr_mult: 1.000000
+    }
+    param {
+        name: "Recon_b"
+        lr_mult: 0.100000
+    }
+    convolution_param {
+        num_output: 1
+        kernel_size: 3
+        stride: 1
+        pad: 1
+        weight_filler {
+            type: "msra"
+        }
+        bias_filler {
+            type: "constant"
+            value: 0
+        }
+    }
+}
+layer {
+    name: "HR_recovery_06"
+    type: "Eltwise"
+    bottom: "data"
+    bottom: "conv_end_06"
+    top: "HR_recovery_06"
+    eltwise_param {
+        operation: SUM
+    }
+}
+layer {
+    name: "loss_06"
+    type: "EuclideanLoss"
+    bottom: "HR_recovery_06"
+    bottom: "label"
+    top: "loss_06"
+    loss_weight: 1
+}
+layer {
+    name: "weight_output_end_06"
+    type: "Scale"
+    bottom: "HR_recovery_06"
+    top: "weight_output_end_06"
+    scale_param {
+        bias_term: false
+    }
+}
+layer {
+    name: "HR_recovery"
+    type: "Eltwise"
+    bottom: "weight_output_end_01"
+    bottom: "weight_output_end_02"
+    bottom: "weight_output_end_03"
+    bottom: "weight_output_end_04"
+    bottom: "weight_output_end_05"
+    bottom: "weight_output_end_06"
+    top: "HR_recovery"
+    eltwise_param {
+        operation: SUM
+    }
+}
+layer {
+    name: "loss_7"
+    type: "EuclideanLoss"
+    bottom: "HR_recovery"
+    bottom: "label"
+    top: "loss_7"
+    loss_weight: 1
+}

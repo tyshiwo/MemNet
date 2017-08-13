@@ -1,0 +1,23 @@
+# The train/test net protocol buffer definition
+net: "./MemNet_M6R6_80C64_train.prototxt"
+# The base learning rate, momentum and the weight decay of the network.
+base_lr: 0.1
+momentum: 0.9
+weight_decay: 0.0001
+# The learning rate policy
+lr_policy: "step"
+gamma: 0.1
+stepsize: 200000
+# gradient clipping: to tune
+clip_gradients: 0.01
+
+# Display every 100 iterations
+display: 10000
+# The maximum number of iterations
+max_iter: 20000000
+# snapshot intermediate results
+snapshot: 10000
+snapshot_prefix: "../../model/MemNet_M6R6_80C64"
+# solver mode: CPU or GPU
+solver_mode: GPU
+
