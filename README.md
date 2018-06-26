@@ -11,7 +11,12 @@ If you find MemNet useful in your research, please consider citing:
 	  booktitle={Proceedings of International Conference on Computer Vision},
 	  year={2017}
 	}
-	
+
+# Other implementation
+[[MemNet-tensorflow]](https://github.com/ly-atdawn/MemNet-Tensorflow) by ly-atdawn
+
+[[MemNet-pytorch]](https://github.com/Vandermode/pytorch-MemNet) by Vandermode
+
 ## Implement adjustable gradient clipping 
 modify sgd_solver.cpp in your_caffe_root/src/caffe/solvers/, where we add the following codes in funciton ClipGradients():
 
